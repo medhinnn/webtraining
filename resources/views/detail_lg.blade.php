@@ -33,16 +33,16 @@
             height: 18vw;
             object-fit: cover;
         }
-    .footer {
-   background-color: #1a252f;
-   position: absolute;
-   bottom: 3%;
-   right: 0%;
-   left: 0%;
+
+        .footer {
+            background-color: #1a252f;
+            position: absolute;
+            bottom: 3%;
+            right: 0%;
+            left: 0%;
 
 
-}
-
+        }
     </style>
 </head>
 
@@ -67,64 +67,56 @@
     </nav>
     <header class="masthead bg-primary text-white text-center py-4">
         <div class="container d-flex align-items-center flex-column">
-            <h2>list of products</h2>
+            <h2> Chromecast-product information</h2>
         </div>
     </header>
     <div class="container d-flex align-items-center flex-column">
-    <div class="row py-4">
-        
-            <div class="col-md-3 col-lg-4 mb-1 card mb-2">
-                <img src="{{ asset('/img/game.png') }}" class="img-fluid rounded">
-                <p class="text-center py-4">
-                <a class="btn btn bg-primary text-white" href="/detail_lg" role="button">LG Tv</a>
-                </p>
+        <div class="row py-4">
+
+            <div class="card mb-1">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                    
+
+                        <img src="{{ asset('/img/game.png') }}" class="img-fluid rounded ">
+                        
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-3 col-lg-4 mb-1 card mb-2">
-                <img src="{{ asset('/img/safe.png') }}" class="img-fluid rounded">
-                <p class="text-center py-4">
-                <a class="btn btn bg-primary text-white" href="#" role="button">Iphone</a>
-                </p>
+
+
+            <!-- header -->
+            <div class="container my-4">
+
+
+                @yield('content')
+
+
             </div>
-            <div class="col-md-3 col-lg-4 mb-1 card mb-2">
-                <img src="{{ asset('/img/submarine.png') }}" class="img-fluid rounded">
-                <p class="text-center py-4">
-                <a class="btn btn bg-primary text-white" href="#" role="button">Chromecast</a>
-                </p>
+
+
+
+
+
+
+            <div class=" py-1 text-center text-white footer">
+                <div class="container">
+                    <small class="copyright">
+                        Copyright - <a class="text-reset fw-bold text-decoration-none" target="_blank"
+                            href="https://twitter.com/user">
+                            FirstName LastName
+                        </a> - <b>XYZ Company</b>
+                    </small>
+                </div>
             </div>
-        </div>
-    </div>
-
-
-    <!-- header -->
-    <div class="container my-4">
-
-
-       @yield('content')
-
-
-   </div>
 
 
 
 
-
-  
-   <div class=" py-1 text-center text-white footer">
-   <div class="container">
-           <small class="copyright">
-               Copyright - <a class="text-reset fw-bold text-decoration-none" target="_blank"
-                   href="https://twitter.com/user">
-                   FirstName LastName
-               </a> - <b>XYZ Company</b>
-           </small>
-       </div>
-   </div>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+                crossorigin="anonymous">
+                </script>
 </body>
 
 </html>

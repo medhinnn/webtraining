@@ -44,7 +44,7 @@ font-weight: 700;
            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                <div class="navbar-nav ms-auto">
                    <a class="nav-link active" href="/employees-list">Home</a>
-                   <a class="nav-link active" href="/product/index">Products</a>
+                   <a class="nav-link active" href="/product">Products</a>
                    <a class="nav-link active" href="/cart">Cart</a>
                    <a class="nav-link active" href="/about">About</a>
                 </div>
