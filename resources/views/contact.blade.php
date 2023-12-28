@@ -15,12 +15,7 @@
    <title>Contact Page</title>
  </head>
  <style>
-  .footer {
-   background-color: #1a252f;
-   position: absolute;
-   bottom: 3%;
-   right: 0%;
-   left: 0%;
+  
  </style>
  <body>
    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body" data-bs-theme="dark">

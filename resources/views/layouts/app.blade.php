@@ -18,11 +18,30 @@
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> <span
                     class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto"> <a class="nav-link active" href="/">Home</a> <a class="nav-link active"
-                        href="/products">Products</a> <a class="nav-link active" href="/cart">Cart</a> <a
-                        class="nav-link active" href="/about">About</a> </div>
+
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active" href="{{ route('home.index') }}">Home</a>
+
+                    <a class="nav-link active" href="{{ route('product.index') }}">Products
+                    </a>
+                    <a class="nav-link active" href="/cart">Cart
+                    </a>
+                    <a class="nav-link active" href="{{ route('home.about') }}">About</a>
+                    <div class="vr bg-white mx-2 d-none d-lg-block"></div>
+                    @guest
+                        <a class="nav-link active" href="{{ route('login') }}">login
+                        </a>
+                        <a class="nav-link active" href="{{ route('register') }}">register</a>
+                    @else
+                        <form id="logout" action="{{ route('logout') }}" method="POST">
+                            <a role="button" class="nav-link active"
+                                onclick="document.getElementById('logout').submit();">logout</a>
+                            @csrf
+                        </form>
+                    @endguest
+                </div>
             </div>
-        </div>
+
     </nav>
     <header class="masthead bg-primary text-white text-center py-4">
         <div class="container d-flex align-items-center flex-column">
