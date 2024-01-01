@@ -2,65 +2,89 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index( request $request )
     {
+      $total= 0;
+      $productsInCart = [];
+      $productsInSession = $request->session()->get("products");
+      if($productsInSession){
+        $productsInCart = Product::findMany(array_keys($productsInSession));
+        $total = Product::sumPriceByQuantities($productsInCart,$productsInSession);
+   }
+   $viewData=[];
+   $viewData["title"]="cart-online-store";
+   $viewData["subtitle"]="shoping cart";
+   $viewData["total"]=$total;
+   $viewData["products"]=$productsInCart;
+   return view("cart.index", $viewData)->with("viewData", $viewData);
+   }  
+   public function add( Request $request, $id ){
+    $products = $request->session()->get("products");
+    $products[$id]= $request->input("Quantity");
+    $request->session()->put("products" ,$products);
+        return redirect()->route('cart.index');
+    
+   }
+   public function delete( Request $request){
+   
+    $request->session()->forget("products");
+        return back();
+    
+   }
+   public function purchase(Request $request)
+   {
+       $productsInSession = $request->session()->get("products");
+       if ($productsInSession) {
+           $userId = Auth::user()->id;
+           $order = new Order();
+           $order->user_id = $userId;
+           $order->total = 0;
+           $order->save();
+           $total = 0;
+           $productsInCart = Product::findMany(array_keys($productsInSession));
 
-        $viewData["title"] = "Cart item list";
-        return view('cart.index')->with("viewData", $viewData);
 
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+           foreach ($productsInCart as $product) {
+               $quantity = $productsInSession[$product->id];
+               $item = new Item();
+               $item->quantity = $quantity;
+               $item->price = $product->price;
+               $item->product_id = $product->id;
+               $item->order_id = $order->id;
+               $item->save();
+               $total = $total + ($product->price * $quantity);
+           }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+           $order->total = $total;
+           $order->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+           $newBalance = Auth::user()->balance - $total;
+           Auth::user()->balance = $newBalance;
+           Auth::user()->save();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+
+           $request->session()->forget('products');
+           $viewData = [];
+           $viewData["title"] = "Purchase - Online Store";
+           $viewData["subtitle"] = "Purchase Status";
+           $viewData["order"] = $order;
+           return view('cart.purchase')->with("viewData", $viewData);
+       } else {
+           return redirect()->route('cart.index');
+       }
+   }
+
 }
+
+ //
+ 

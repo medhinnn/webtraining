@@ -46,7 +46,7 @@
                         @csrf
                         @method('DELETE')
                    
-                    <td><button class="btn btn-danger">
+                    <td><button class="btn btn-danger" onclick="return confirm('do you want to delete')">
                         <i class="bi-trash"></i> 
                     </form>
                     </td>
